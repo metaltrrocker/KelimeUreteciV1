@@ -17,7 +17,7 @@ public:
 
 private slots:
 
-    void on_comboBox_activated(const QString &arg1);
+    //void on_comboBox_activated(const QString &arg1);
 
     void on_pushButton_clicked();
 
@@ -28,6 +28,10 @@ private slots:
     void on_actionFormu_Temizle_triggered();
 
     void on_actionKullan_m_triggered();
+
+    void on_comboBox_activated(int index);
+
+    void on_action_zel_Se_im_triggered();
 
 private:
     Ui::MainWindow *ui;

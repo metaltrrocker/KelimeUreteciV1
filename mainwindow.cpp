@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow()
@@ -22,9 +23,35 @@ MainWindow::~MainWindow()
 
 
 
-void MainWindow::on_comboBox_activated(const QString &arg1)
+void MainWindow::on_comboBox_activated(int index)
 {
     ui->label_11->setText("Kelime Uzunluğu "+ ui->comboBox->currentText()+" olarak ayarlandı!");
+    switch (index) {
+    case 0:
+        ui->label_14->setText("1,7 Mb");
+        break;
+    case 1:
+        ui->label_14->setText("Mb");
+        break;
+    case 2:
+        ui->label_14->setText("Mb");
+        break;
+    case 3:
+        ui->label_14->setText("Mb");
+        break;
+    case 4:
+        ui->label_14->setText("Mb");
+        break;
+    case 5:
+        ui->label_14->setText("Mb");
+        break;
+    case 6:
+        ui->label_14->setText("Mb");
+        break;
+    case 7:
+        ui->label_14->setText("Mb");
+        break;
+    }
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -67,26 +94,96 @@ void MainWindow::on_pushButton_clicked()
 
             switch (ui->comboBox->currentIndex()) {
             case 0:
-                dizi[0]=90;
-                dizi[1]=90;
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            //Dosyaya yazma işlemi
+                            stream << on_ek;
+                            stream << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                            stream << son_ek << endl;
+                        }
+                    }
+                }
                 break;
             case 1:
-                dizi[0]=90;
-                dizi[1]=65;
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            {
+                                //Dosyaya yazma işlemi
+                                stream << on_ek;
+                                stream << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                stream << son_ek << endl;
+                            }
+                        }
+                    }
+                }
                 break;
             case 2:
-                dizi[0]=65;
-                dizi[1]=65;
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            {
+                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                {
+                                    //Dosyaya yazma işlemi
+                                    stream << on_ek;
+                                    stream << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                    stream << son_ek << endl;
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
             case 3:
-
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            {
+                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                {
+                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    {
+                                        //Dosyaya yazma işlemi
+                                        stream << on_ek;
+                                        stream << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                        stream << son_ek << endl;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 break;
             case 4:
-
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
                 break;
             }
-            // Ascii sınırları
 
+
+            // Ascii sınırları
+            /*
             for(dizi[0]; dizi[0]<=90; dizi[0]++)
             {
 
@@ -115,13 +212,13 @@ void MainWindow::on_pushButton_clicked()
                 }
             }
 
-
+*/
             // uçbirim çıktısı
             qDebug("İşlem Tamamlandı!");
 
             ui->label_11->setText("İşlem Tamamlandı");
             // İşlem bitti
-            //ui->progressBar->setValue(100);
+            ui->progressBar->setValue(100);
 
         }
 
@@ -178,4 +275,12 @@ void MainWindow::on_actionFormu_Temizle_triggered()
 void MainWindow::on_actionKullan_m_triggered()
 {
     QMessageBox::information(NULL,"Kullanımı","Programı sıralı şifreler veya kelimeler oluşturmak için kullanabilirsiniz.\nİşlemi başlatmadan önce boş alanın tahmini boyuttan fazla olduğundan emin olun.");
+}
+
+
+
+
+void MainWindow::on_action_zel_Se_im_triggered()
+{
+
 }
