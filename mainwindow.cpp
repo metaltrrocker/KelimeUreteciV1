@@ -181,38 +181,6 @@ void MainWindow::on_pushButton_clicked()
                 break;
             }
 
-
-            // Ascii sınırları
-            /*
-            for(dizi[0]; dizi[0]<=90; dizi[0]++)
-            {
-
-                //progress bar'ı en dıştaki döngünün içine koyup artış değerini hesaplat!
-                ui->progressBar->setValue(ui->progressBar->value()+4);
-
-
-                for(dizi[1]; dizi[1]<=90; dizi[1]++)
-                {
-
-                    // En küçük kelime uzunluğu(3)
-                    for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
-                    {
-                        for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
-                        {
-                            for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
-                            {
-                                //Dosyaya yazma işlemi
-                                stream << on_ek;
-                                stream << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
-                                stream << son_ek << endl;
-
-                            }
-                        }
-                    }
-                }
-            }
-
-*/
             // uçbirim çıktısı
             qDebug("İşlem Tamamlandı!");
 
@@ -278,9 +246,3 @@ void MainWindow::on_actionKullan_m_triggered()
 }
 
 
-
-
-void MainWindow::on_action_zel_Se_im_triggered()
-{
-
-}
