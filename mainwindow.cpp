@@ -59,7 +59,17 @@ void MainWindow::on_pushButton_clicked()
 
     QDir yol("/home/");
     QString s;
-    int dizi[8];
+    int dizi[94];
+    int buyukharf[26];
+    int kucukharf[26];
+    int sayilar[10];
+    int ozelkarakterler[33];
+    int sayac;
+    int l1=0;
+    int l2=0;
+    int l3=0;
+    int l4=0;
+    int kelimeboyutu=0;
     QString on_ek,son_ek;
     s = yol.relativeFilePath("Kelime_Listesi.liste");
     //QString dosya = "Kelime_Listesi";
@@ -75,7 +85,61 @@ void MainWindow::on_pushButton_clicked()
     on_ek = ui->lineEdit->text();
     son_ek = ui-> lineEdit_2->text();
 
+    /*  Ascii için seçeneklere göre diziyi yapılandırıyoruz.
+        Sıralama: Büyük Harf > Küçük harf > Sayılar > Özel karakterler
+        Ascii tablosundan decimal olarak değer aralıkları;
+        Büyük Harf-> checkbox2 - [65-90]
+        Küçük harf-> checkbox - [97-122]
+        Sayılar-> checkbox3 - [48-57]
+        Özel karakterler(printable)-> checkbox4 - [32-47],[58-64],[91-96],[123-126]
+    */
 
+
+
+    //Karakterlerin diziye aktarılması
+    sayac = 0;
+    for(int buyuk=65;buyuk<=90;buyuk++)
+    {
+        buyukharf[sayac]=buyuk;
+        sayac++;
+    }
+    sayac = 0;
+    for(int kucuk=97;kucuk<=122;kucuk++)
+    {
+        kucukharf[sayac]=kucuk;
+        sayac++;
+    }
+    sayac = 0;
+    for(int sayi=48;sayi<=57;sayi++)
+    {
+        sayilar[sayac]=sayi;
+        sayac++;
+    }
+    sayac = 0;
+    for(int ozel=32;ozel<=47;ozel++)
+    {
+        ozelkarakterler[sayac]=ozel;
+        sayac++;
+    }
+    sayac=16;
+    for(int ozel=58;ozel<=64;ozel++)
+    {
+        ozelkarakterler[sayac]=ozel;
+        sayac++;
+    }
+    sayac = 23;
+    for(int ozel=91;ozel<=96;ozel++)
+    {
+        ozelkarakterler[sayac]=ozel;
+        sayac++;
+    }
+    sayac = 29;
+    for(int ozel=123;ozel<=126;ozel++)
+    {
+        ozelkarakterler[sayac]=ozel;
+        sayac++;
+    }
+    //sayac son değeri = 33 olmalı!
     //Checkbox'ların seçili olup olmadığını kontrol et. Seçim yapılmadıysa açılır pencere ile uyarı ver.
     if(ui->comboBox->currentIndex()==-1)
     {
@@ -89,33 +153,81 @@ void MainWindow::on_pushButton_clicked()
         }
         else
         {
+
+/*
+            //Karakter seti uçbirime yollama
+            for(int j=0;j<26;j++)
+                qDebug() << QVariant(buyukharf[j]).toChar();
+            for(int j=0;j<26;j++)
+                qDebug() << QVariant(kucukharf[j]).toChar();
+            for(int j=0;j<10;j++)
+                qDebug() << QVariant(sayilar[j]).toChar();
+            for(int j=0;j<33;j++)
+                qDebug() << QVariant(ozelkarakterler[j]).toChar();
+*/
+
+
+            for(int j=0;j<=94;j++)
+                dizi[j]=32;
+
+
+            //Checkboxlara göre dizi[]'ye karakterlerin atanması
+            if(ui->checkBox_2->isChecked())
+            {
+                kelimeboyutu = kelimeboyutu + 26;
+                for(l1=0;l1<26;l1++)
+                dizi[l1+l2+l3+l4]=buyukharf[l1];
+            }
+            if(ui->checkBox->isChecked())
+            {
+                kelimeboyutu = kelimeboyutu + 26;
+                for(l2=0;l2<26;l2++)
+                dizi[l1+l2+l3+l4]=kucukharf[l2];
+            }
+            if(ui->checkBox_3->isChecked())
+            {
+                kelimeboyutu = kelimeboyutu + 10;
+                for(l3=0;l3<10;l3++)
+                dizi[l1+l2+l3+l4]=sayilar[l3];
+            }
+            if(ui->checkBox_4->isChecked())
+            {
+                kelimeboyutu = kelimeboyutu + 33;
+                for(l4=0;l4<33;l4++)
+                dizi[l1+l2+l3+l4]=ozelkarakterler[l4];
+            }
+            qDebug() << "Kelim çeşidi sayısı: " << kelimeboyutu;
             // Kelimelerin oluşturulmaya başlandığı bölüm
             ui->label_11->setText("Lütfen işlemin tamamlanmasını bekleyin");
 
+            for(int j=0;j<=94;j++)
+                qDebug() << QVariant(dizi[j]).toChar();
+
+
             switch (ui->comboBox->currentIndex()) {
             case 0:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                for(int i=0; i<kelimeboyutu; i++)
                 {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    for(int j=0; j<kelimeboyutu; j++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(int k=0; k<kelimeboyutu; k++)
                         {
                             //Dosyaya yazma işlemi
                             stream << on_ek;
-                            stream << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                            stream << QVariant(dizi[k]).toChar() << QVariant(dizi[j]).toChar() << QVariant(dizi[i]).toChar();
                             stream << son_ek << endl;
                         }
                     }
                 }
                 break;
             case 1:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                for(dizi[0]=0; dizi[0]<=kelimeboyutu; dizi[0]++)
                 {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    for(dizi[1]=0; dizi[1]<=kelimeboyutu; dizi[1]++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(dizi[2]=0; dizi[2]<=kelimeboyutu; dizi[2]++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(dizi[3]=0; dizi[3]<=kelimeboyutu; dizi[3]++)
                             {
                                 //Dosyaya yazma işlemi
                                 stream << on_ek;
@@ -172,47 +284,142 @@ void MainWindow::on_pushButton_clicked()
                 }
                 break;
             case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            }
-
-
-            // Ascii sınırları
-            /*
-            for(dizi[0]; dizi[0]<=90; dizi[0]++)
-            {
-
-                //progress bar'ı en dıştaki döngünün içine koyup artış değerini hesaplat!
-                ui->progressBar->setValue(ui->progressBar->value()+4);
-
-
-                for(dizi[1]; dizi[1]<=90; dizi[1]++)
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
                 {
-
-                    // En küçük kelime uzunluğu(3)
-                    for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
                     {
-                        for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
                         {
-                            for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
                             {
-                                //Dosyaya yazma işlemi
-                                stream << on_ek;
-                                stream << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
-                                stream << son_ek << endl;
-
+                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                {
+                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    {
+                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        {
+                                            //Dosyaya yazma işlemi
+                                            stream << on_ek;
+                                            stream << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                            stream << son_ek << endl;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
+                break;
+            case 5:
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            {
+                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                {
+                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    {
+                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        {
+                                            for(dizi[7]=65; dizi[7]<=90; dizi[7]++)
+                                            {
+                                                //Dosyaya yazma işlemi
+                                                stream << on_ek;
+                                                stream << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                stream << son_ek << endl;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 6:
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            {
+                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                {
+                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    {
+                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        {
+                                            for(dizi[7]=65; dizi[7]<=90; dizi[7]++)
+                                            {
+                                                for(dizi[8]=65; dizi[8]<=90; dizi[8]++)
+                                                {
+                                                    //Dosyaya yazma işlemi
+                                                    stream << on_ek;
+                                                    stream << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                    stream << son_ek << endl;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case 7:
+                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
+                {
+                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    {
+                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        {
+                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            {
+                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                {
+                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    {
+                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        {
+                                            for(dizi[7]=65; dizi[7]<=90; dizi[7]++)
+                                            {
+                                                for(dizi[8]=65; dizi[8]<=90; dizi[8]++)
+                                                {
+                                                    for(dizi[9]=65; dizi[9]<=90; dizi[9]++)
+                                                    {
+                                                        //Dosyaya yazma işlemi
+                                                        stream << on_ek;
+                                                        stream << QVariant(dizi[9]).toChar() << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                        stream << son_ek << endl;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
             }
 
-*/
+
+
+
+
+            // Ascii sınırları
+            /*
+            //progress bar'ı en dıştaki döngünün içine koyup artış değerini hesaplat!
+            ui->progressBar->setValue(ui->progressBar->value()+4);
+            */
             // uçbirim çıktısı
             qDebug("İşlem Tamamlandı!");
 
