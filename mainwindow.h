@@ -33,6 +33,7 @@ private slots:
 
     void on_action_zel_Se_im_triggered();
 
+
 private:
     Ui::MainWindow *ui;
 };

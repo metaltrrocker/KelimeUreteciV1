@@ -7,6 +7,7 @@
 #include <QProcess>
 #include <QTimer>
 #include <QDebug>
+#include <QApplication>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -57,6 +58,7 @@ void MainWindow::on_comboBox_activated(int index)
 void MainWindow::on_pushButton_clicked()
 {
 
+    QMessageBox mesajkutusu;
     QDir yol("/home/");
     QString s;
     int dizi[94];
@@ -70,6 +72,7 @@ void MainWindow::on_pushButton_clicked()
     int l3=0;
     int l4=0;
     int kelimeboyutu=0;
+    int x,y,z,t,w,q,m,n,g,h;
     QString on_ek,son_ek;
     s = yol.relativeFilePath("Kelime_Listesi.liste");
     //QString dosya = "Kelime_Listesi";
@@ -154,7 +157,7 @@ void MainWindow::on_pushButton_clicked()
         else
         {
 
-/*
+            /*
             //Karakter seti uçbirime yollama
             for(int j=0;j<26;j++)
                 qDebug() << QVariant(buyukharf[j]).toChar();
@@ -176,131 +179,121 @@ void MainWindow::on_pushButton_clicked()
             {
                 kelimeboyutu = kelimeboyutu + 26;
                 for(l1=0;l1<26;l1++)
-                dizi[l1+l2+l3+l4]=buyukharf[l1];
+                    dizi[l1+l2+l3+l4]=buyukharf[l1];
             }
             if(ui->checkBox->isChecked())
             {
                 kelimeboyutu = kelimeboyutu + 26;
                 for(l2=0;l2<26;l2++)
-                dizi[l1+l2+l3+l4]=kucukharf[l2];
+                    dizi[l1+l2+l3+l4]=kucukharf[l2];
             }
             if(ui->checkBox_3->isChecked())
             {
                 kelimeboyutu = kelimeboyutu + 10;
                 for(l3=0;l3<10;l3++)
-                dizi[l1+l2+l3+l4]=sayilar[l3];
+                    dizi[l1+l2+l3+l4]=sayilar[l3];
             }
             if(ui->checkBox_4->isChecked())
             {
                 kelimeboyutu = kelimeboyutu + 33;
                 for(l4=0;l4<33;l4++)
-                dizi[l1+l2+l3+l4]=ozelkarakterler[l4];
+                    dizi[l1+l2+l3+l4]=ozelkarakterler[l4];
             }
-            qDebug() << "Kelim çeşidi sayısı: " << kelimeboyutu;
+            qDebug() << "Karakter çeşidi sayısı: " << kelimeboyutu;
             // Kelimelerin oluşturulmaya başlandığı bölüm
-            ui->label_11->setText("Lütfen işlemin tamamlanmasını bekleyin");
 
             for(int j=0;j<=94;j++)
                 qDebug() << QVariant(dizi[j]).toChar();
 
 
-            switch (ui->comboBox->currentIndex()) {
-            case 0:
-                for(int i=0; i<kelimeboyutu; i++)
-                {
-                    for(int j=0; j<kelimeboyutu; j++)
+            //Kullanıcı İşlemi Başlata tıkladığı zaman dosya boyutu,toplam kelime bilgiler verilecek ve
+            //İşleme devam etmesi için onay alınacak.(Dosya boyutu ve işlem uzun sürdüğü için sistem yanıt vermeyebilir!)
+            //QMessageBox::question(NULL,"Uyarı","Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!\nDevam etmek istediğinize emin misiniz?",QMessageBox::Yes,QMessageBox::No);
+            mesajkutusu.setText("Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!");
+            mesajkutusu.setInformativeText("Devam etmek istediğinize emin misiniz?");
+            mesajkutusu.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+            mesajkutusu.setDefaultButton(QMessageBox::No);
+            mesajkutusu.setIcon(QMessageBox::Critical);
+            mesajkutusu.setWindowTitle("Uyarı!");
+            int cevap = mesajkutusu.exec();
+            switch (cevap) {
+            case QMessageBox::Yes:
+
+
+                ui->label_11->setText("Lütfen işlemin tamamlanmasını bekleyin");
+
+                //Dosyaya yazmanın başlaması(Kelime Oluşturma)
+                switch (ui->comboBox->currentIndex()) {
+                case 0:
+                    for(x=0; x<kelimeboyutu; x++)
                     {
-                        for(int k=0; k<kelimeboyutu; k++)
+                        for(y=0; y<kelimeboyutu; y++)
                         {
-                            //Dosyaya yazma işlemi
-                            stream << on_ek;
-                            stream << QVariant(dizi[k]).toChar() << QVariant(dizi[j]).toChar() << QVariant(dizi[i]).toChar();
-                            stream << son_ek << endl;
-                        }
-                    }
-                }
-                break;
-            case 1:
-                for(dizi[0]=0; dizi[0]<=kelimeboyutu; dizi[0]++)
-                {
-                    for(dizi[1]=0; dizi[1]<=kelimeboyutu; dizi[1]++)
-                    {
-                        for(dizi[2]=0; dizi[2]<=kelimeboyutu; dizi[2]++)
-                        {
-                            for(dizi[3]=0; dizi[3]<=kelimeboyutu; dizi[3]++)
+                            for(int z=0; z<kelimeboyutu; z++)
                             {
                                 //Dosyaya yazma işlemi
                                 stream << on_ek;
-                                stream << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                stream << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                 stream << son_ek << endl;
                             }
                         }
                     }
-                }
-                break;
-            case 2:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
-                {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    break;
+                case 1:
+                    for(x=0; x<=kelimeboyutu; x++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(y=0; y<=kelimeboyutu; y++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(z=0; z<=kelimeboyutu; z++)
                             {
-                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                for(t=0; t<=kelimeboyutu; t++)
                                 {
                                     //Dosyaya yazma işlemi
                                     stream << on_ek;
-                                    stream << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                    stream << QVariant(dizi[t]).toChar() << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                     stream << son_ek << endl;
                                 }
                             }
                         }
                     }
-                }
-                break;
-            case 3:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
-                {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    break;
+                case 2:
+                    for(x=0; x<=kelimeboyutu; x++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(y=0; y<=kelimeboyutu; y++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(z=0; z<=kelimeboyutu; z++)
                             {
-                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                for(t=0; t<=kelimeboyutu; t++)
                                 {
-                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    for(w=0; w<=kelimeboyutu; w++)
                                     {
                                         //Dosyaya yazma işlemi
                                         stream << on_ek;
-                                        stream << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                        stream << QVariant(dizi[w]).toChar() << QVariant(dizi[t]).toChar() << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                         stream << son_ek << endl;
                                     }
                                 }
                             }
                         }
                     }
-                }
-                break;
-            case 4:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
-                {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    break;
+                case 3:
+                    for(x=0; x<=kelimeboyutu; x++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(y=0; y<=kelimeboyutu; y++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(z=0; z<=kelimeboyutu; z++)
                             {
-                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                for(t=0; t<=kelimeboyutu; t++)
                                 {
-                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    for(w=0; w<=kelimeboyutu; w++)
                                     {
-                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        for(q=0; q<=kelimeboyutu; q++)
                                         {
                                             //Dosyaya yazma işlemi
                                             stream << on_ek;
-                                            stream << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                            stream << QVariant(dizi[q]).toChar() << QVariant(dizi[w]).toChar() << QVariant(dizi[t]).toChar() << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                             stream << son_ek << endl;
                                         }
                                     }
@@ -308,28 +301,25 @@ void MainWindow::on_pushButton_clicked()
                             }
                         }
                     }
-                }
-                break;
-            case 5:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
-                {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    break;
+                case 4:
+                    for(x=0; x<=kelimeboyutu; x++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(y=0; y<=kelimeboyutu; y++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(z=0; z<=kelimeboyutu; z++)
                             {
-                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                for(t=0; t<=kelimeboyutu; t++)
                                 {
-                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    for(w=0; w<=kelimeboyutu; w++)
                                     {
-                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        for(q=0; q<=kelimeboyutu; q++)
                                         {
-                                            for(dizi[7]=65; dizi[7]<=90; dizi[7]++)
+                                            for(m=0; m<=kelimeboyutu; m++)
                                             {
                                                 //Dosyaya yazma işlemi
                                                 stream << on_ek;
-                                                stream << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                stream << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                 stream << son_ek << endl;
                                             }
                                         }
@@ -338,30 +328,27 @@ void MainWindow::on_pushButton_clicked()
                             }
                         }
                     }
-                }
-                break;
-            case 6:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
-                {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    break;
+                case 5:
+                    for(x=0; x<=kelimeboyutu; x++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(y=0; y<=kelimeboyutu; y++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(z=0; z<=kelimeboyutu; z++)
                             {
-                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                for(t=0; t<=kelimeboyutu; t++)
                                 {
-                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    for(w=0; w<=kelimeboyutu; w++)
                                     {
-                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        for(q=0; q<=kelimeboyutu; q++)
                                         {
-                                            for(dizi[7]=65; dizi[7]<=90; dizi[7]++)
+                                            for(m=0; m<=kelimeboyutu; m++)
                                             {
-                                                for(dizi[8]=65; dizi[8]<=90; dizi[8]++)
+                                                for(n=0; n<=kelimeboyutu; n++)
                                                 {
                                                     //Dosyaya yazma işlemi
                                                     stream << on_ek;
-                                                    stream << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                    stream << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                     stream << son_ek << endl;
                                                 }
                                             }
@@ -371,32 +358,29 @@ void MainWindow::on_pushButton_clicked()
                             }
                         }
                     }
-                }
-                break;
-            case 7:
-                for(dizi[0]=65; dizi[0]<=90; dizi[0]++)
-                {
-                    for(dizi[1]=65; dizi[1]<=90; dizi[1]++)
+                    break;
+                case 6:
+                    for(x=0; x<=kelimeboyutu; x++)
                     {
-                        for(dizi[2]=65; dizi[2]<=90; dizi[2]++)
+                        for(y=0; y<=kelimeboyutu; y++)
                         {
-                            for(dizi[3]=65; dizi[3]<=90; dizi[3]++)
+                            for(z=0; z<=kelimeboyutu; z++)
                             {
-                                for(dizi[4]=65; dizi[4]<=90; dizi[4]++)
+                                for(t=0; t<=kelimeboyutu; t++)
                                 {
-                                    for(dizi[5]=65; dizi[5]<=90; dizi[5]++)
+                                    for(w=0; w<=kelimeboyutu; w++)
                                     {
-                                        for(dizi[6]=65; dizi[6]<=90; dizi[6]++)
+                                        for(q=0; q<=kelimeboyutu; q++)
                                         {
-                                            for(dizi[7]=65; dizi[7]<=90; dizi[7]++)
+                                            for(m=0; m<=kelimeboyutu; m++)
                                             {
-                                                for(dizi[8]=65; dizi[8]<=90; dizi[8]++)
+                                                for(n=0; n<=kelimeboyutu; n++)
                                                 {
-                                                    for(dizi[9]=65; dizi[9]<=90; dizi[9]++)
+                                                    for(g=0; g<=kelimeboyutu; g++)
                                                     {
                                                         //Dosyaya yazma işlemi
                                                         stream << on_ek;
-                                                        stream << QVariant(dizi[9]).toChar() << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                        stream << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                         stream << son_ek << endl;
                                                     }
                                                 }
@@ -407,7 +391,63 @@ void MainWindow::on_pushButton_clicked()
                             }
                         }
                     }
+                    break;
+                case 7:
+                    for(x=0; x<=kelimeboyutu; x++)
+                    {
+                        for(y=0; y<=kelimeboyutu; y++)
+                        {
+                            for(z=0; z<=kelimeboyutu; z++)
+                            {
+                                for(t=0; t<=kelimeboyutu; t++)
+                                {
+                                    for(w=0; w<=kelimeboyutu; w++)
+                                    {
+                                        for(q=0; q<=kelimeboyutu; q++)
+                                        {
+                                            for(m=0; m<=kelimeboyutu; m++)
+                                            {
+                                                for(n=0; n<=kelimeboyutu; n++)
+                                                {
+                                                    for(g=0; g<=kelimeboyutu; g++)
+                                                    {
+                                                        for(h=0; h<=kelimeboyutu; h++)
+                                                        {
+                                                            //Dosyaya yazma işlemi
+                                                            stream << on_ek;
+                                                            stream << QVariant(dizi[9]).toChar() << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
+                                                            stream << son_ek << endl;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
                 }
+
+                // Ascii sınırları
+                /*
+                //progress bar'ı en dıştaki döngünün içine koyup artış değerini hesaplat!
+                ui->progressBar->setValue(ui->progressBar->value()+4);
+                */
+                // uçbirim çıktısı
+                qDebug("İşlem Tamamlandı!");
+
+                ui->label_11->setText("İşlem Tamamlandı");
+                // İşlem bitti
+                ui->progressBar->setValue(100);
+                file.close();
+                break;
+
+            case QMessageBox::No:
+                qDebug()<< "Hayır seçildi";
+                //qApp->quit();
+                ui->label_11->setText("İşlem kullanıcı tarafından iptal edildi!");
                 break;
             }
 
@@ -415,22 +455,9 @@ void MainWindow::on_pushButton_clicked()
 
 
 
-            // Ascii sınırları
-            /*
-            //progress bar'ı en dıştaki döngünün içine koyup artış değerini hesaplat!
-            ui->progressBar->setValue(ui->progressBar->value()+4);
-            */
-            // uçbirim çıktısı
-            qDebug("İşlem Tamamlandı!");
-
-            ui->label_11->setText("İşlem Tamamlandı");
-            // İşlem bitti
-            ui->progressBar->setValue(100);
-
         }
 
         //Dosyayı kapatır
-        file.close();
 
         //    QTimer timer1;
         //    ui->label_14->setText(QString::number(timer1.interval());
