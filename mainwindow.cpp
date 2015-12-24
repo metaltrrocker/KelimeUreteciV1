@@ -5,9 +5,10 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QProcess>
-#include <QTimer>
 #include <QDebug>
 #include <QApplication>
+#include <math.h>
+#include <degisken.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,37 +23,10 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
 void MainWindow::on_comboBox_activated(int index)
 {
     ui->label_11->setText("Kelime Uzunluğu "+ ui->comboBox->currentText()+" olarak ayarlandı!");
-    switch (index) {
-    case 0:
-        ui->label_14->setText("1,7 Mb");
-        break;
-    case 1:
-        ui->label_14->setText("Mb");
-        break;
-    case 2:
-        ui->label_14->setText("Mb");
-        break;
-    case 3:
-        ui->label_14->setText("Mb");
-        break;
-    case 4:
-        ui->label_14->setText("Mb");
-        break;
-    case 5:
-        ui->label_14->setText("Mb");
-        break;
-    case 6:
-        ui->label_14->setText("Mb");
-        break;
-    case 7:
-        ui->label_14->setText("Mb");
-        break;
-    }
+    karaktersayisi_glob = index;
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -61,7 +35,7 @@ void MainWindow::on_pushButton_clicked()
     QMessageBox mesajkutusu;
     QDir yol("/home/");
     QString s;
-    int dizi[94];
+    static int dizi[94];
     int buyukharf[26];
     int kucukharf[26];
     int sayilar[10];
@@ -71,9 +45,11 @@ void MainWindow::on_pushButton_clicked()
     int l2=0;
     int l3=0;
     int l4=0;
-    int kelimeboyutu=0;
+    int karaktersayisi=0;
+    int progress_sayac=0;
     int x,y,z,t,w,q,m,n,g,h;
-    QString on_ek,son_ek;
+    int dosyaboyutu_son;
+    QString on_ek,son_ek,mesajkutusustring,birim,dosyaboyutu_son_string;
     s = yol.relativeFilePath("Kelime_Listesi.liste");
     //QString dosya = "Kelime_Listesi";
 
@@ -170,46 +146,74 @@ void MainWindow::on_pushButton_clicked()
 */
 
 
-            for(int j=0;j<=94;j++)
-                dizi[j]=32;
+//            for(int j=0;j<=94;j++)
+//                dizi[j]=32;
 
 
             //Checkboxlara göre dizi[]'ye karakterlerin atanması
             if(ui->checkBox_2->isChecked())
             {
-                kelimeboyutu = kelimeboyutu + 26;
+                karaktersayisi = karaktersayisi + 26;
                 for(l1=0;l1<26;l1++)
                     dizi[l1+l2+l3+l4]=buyukharf[l1];
             }
             if(ui->checkBox->isChecked())
             {
-                kelimeboyutu = kelimeboyutu + 26;
+                karaktersayisi = karaktersayisi + 26;
                 for(l2=0;l2<26;l2++)
                     dizi[l1+l2+l3+l4]=kucukharf[l2];
             }
             if(ui->checkBox_3->isChecked())
             {
-                kelimeboyutu = kelimeboyutu + 10;
+                karaktersayisi = karaktersayisi + 10;
                 for(l3=0;l3<10;l3++)
                     dizi[l1+l2+l3+l4]=sayilar[l3];
             }
             if(ui->checkBox_4->isChecked())
             {
-                kelimeboyutu = kelimeboyutu + 33;
+                karaktersayisi = karaktersayisi + 33;
                 for(l4=0;l4<33;l4++)
                     dizi[l1+l2+l3+l4]=ozelkarakterler[l4];
             }
-            qDebug() << "Karakter çeşidi sayısı: " << kelimeboyutu;
-            // Kelimelerin oluşturulmaya başlandığı bölüm
+//            qDebug() << "Karakter çeşidi sayısı: " << karaktersayisi;
 
-            for(int j=0;j<=94;j++)
-                qDebug() << QVariant(dizi[j]).toChar();
+            kelimeboyutu_glob = QVariant(ui->comboBox->currentIndex()).toInt() + 3;
+            onek_glob = on_ek.length();
+            sonek_glob = son_ek.length();
+            karaktersayisi_glob = karaktersayisi;
 
+            dosyaboyut_glob = pow(onek_glob+sonek_glob+karaktersayisi_glob,kelimeboyutu_glob);
+
+//            qDebug()<< kelimeboyutu_glob << " " << onek_glob << " " << sonek_glob << " " << karaktersayisi_glob ;
+            dosyaboyutu_son = 5* dosyaboyut_glob/1024;
+//            qDebug()<<dosyaboyutu_son;
+            if(dosyaboyutu_son<1024)
+            {
+                birim = " KB";
+                //dosyaboyutu_son_string = QString::number(dosyaboyutu_son,'f',1);
+                qDebug()<<QVariant(dosyaboyutu_son).toString();
+            }
+            else if(dosyaboyutu_son>=1024 && dosyaboyutu_son<1048576)
+            {
+                dosyaboyutu_son = dosyaboyutu_son/1024;
+                //dosyaboyutu_son_string = QString::number(dosyaboyutu_son,'f',1);
+                birim = " MB";
+                qDebug()<<QVariant(dosyaboyutu_son/1024).toString();
+            }
+            else
+            {
+                dosyaboyutu_son = dosyaboyutu_son/1024;
+                //dosyaboyutu_son_string=QString::number(dosyaboyutu_son,'f',1);
+                birim = " GB";
+                qDebug()<<QVariant(dosyaboyutu_son/1048576).toString();
+
+            }
+            ui->label_14->setText(QVariant(dosyaboyutu_son).toString()+birim);
 
             //Kullanıcı İşlemi Başlata tıkladığı zaman dosya boyutu,toplam kelime bilgiler verilecek ve
             //İşleme devam etmesi için onay alınacak.(Dosya boyutu ve işlem uzun sürdüğü için sistem yanıt vermeyebilir!)
-            //QMessageBox::question(NULL,"Uyarı","Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!\nDevam etmek istediğinize emin misiniz?",QMessageBox::Yes,QMessageBox::No);
-            mesajkutusu.setText("Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!");
+            mesajkutusustring = "Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!\nDosya Boyutu : " +  dosyaboyutu_son_string + QVariant(birim).toString();
+            mesajkutusu.setText(mesajkutusustring);
             mesajkutusu.setInformativeText("Devam etmek istediğinize emin misiniz?");
             mesajkutusu.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
             mesajkutusu.setDefaultButton(QMessageBox::No);
@@ -219,59 +223,65 @@ void MainWindow::on_pushButton_clicked()
             switch (cevap) {
             case QMessageBox::Yes:
 
-
+                ui->progressBar->setValue(0);
                 ui->label_11->setText("Lütfen işlemin tamamlanmasını bekleyin");
 
                 //Dosyaya yazmanın başlaması(Kelime Oluşturma)
                 switch (ui->comboBox->currentIndex()) {
                 case 0:
-                    for(x=0; x<kelimeboyutu; x++)
+                    for(x=0; x<karaktersayisi; x++)
                     {
-                        for(y=0; y<kelimeboyutu; y++)
+                        for(y=0; y<karaktersayisi; y++)
                         {
-                            for(int z=0; z<kelimeboyutu; z++)
+                            for(int z=0; z<karaktersayisi; z++)
                             {
                                 //Dosyaya yazma işlemi
                                 stream << on_ek;
                                 stream << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                 stream << son_ek << endl;
+                                ui->progressBar->setValue(progress_sayac+100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                progress_sayac++;
                             }
                         }
                     }
                     break;
                 case 1:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<karaktersayisi; t++)
                                 {
                                     //Dosyaya yazma işlemi
                                     stream << on_ek;
                                     stream << QVariant(dizi[t]).toChar() << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                     stream << son_ek << endl;
+                                    ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                    progress_sayac++;
                                 }
                             }
                         }
                     }
                     break;
                 case 2:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<karaktersayisi; t++)
                                 {
-                                    for(w=0; w<=kelimeboyutu; w++)
+                                    for(w=0; w<karaktersayisi; w++)
                                     {
                                         //Dosyaya yazma işlemi
                                         stream << on_ek;
                                         stream << QVariant(dizi[w]).toChar() << QVariant(dizi[t]).toChar() << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                         stream << son_ek << endl;
+                                        ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                        progress_sayac++;
                                     }
                                 }
                             }
@@ -279,22 +289,24 @@ void MainWindow::on_pushButton_clicked()
                     }
                     break;
                 case 3:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<=karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<=karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<=karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<=karaktersayisi; t++)
                                 {
-                                    for(w=0; w<=kelimeboyutu; w++)
+                                    for(w=0; w<=karaktersayisi; w++)
                                     {
-                                        for(q=0; q<=kelimeboyutu; q++)
+                                        for(q=0; q<=karaktersayisi; q++)
                                         {
                                             //Dosyaya yazma işlemi
                                             stream << on_ek;
                                             stream << QVariant(dizi[q]).toChar() << QVariant(dizi[w]).toChar() << QVariant(dizi[t]).toChar() << QVariant(dizi[z]).toChar() << QVariant(dizi[y]).toChar() << QVariant(dizi[x]).toChar();
                                             stream << son_ek << endl;
+                                            ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                            progress_sayac++;
                                         }
                                     }
                                 }
@@ -303,24 +315,26 @@ void MainWindow::on_pushButton_clicked()
                     }
                     break;
                 case 4:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<=karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<=karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<=karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<=karaktersayisi; t++)
                                 {
-                                    for(w=0; w<=kelimeboyutu; w++)
+                                    for(w=0; w<=karaktersayisi; w++)
                                     {
-                                        for(q=0; q<=kelimeboyutu; q++)
+                                        for(q=0; q<=karaktersayisi; q++)
                                         {
-                                            for(m=0; m<=kelimeboyutu; m++)
+                                            for(m=0; m<=karaktersayisi; m++)
                                             {
                                                 //Dosyaya yazma işlemi
                                                 stream << on_ek;
                                                 stream << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                 stream << son_ek << endl;
+                                                ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                                progress_sayac++;
                                             }
                                         }
                                     }
@@ -330,26 +344,28 @@ void MainWindow::on_pushButton_clicked()
                     }
                     break;
                 case 5:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<=karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<=karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<=karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<=karaktersayisi; t++)
                                 {
-                                    for(w=0; w<=kelimeboyutu; w++)
+                                    for(w=0; w<=karaktersayisi; w++)
                                     {
-                                        for(q=0; q<=kelimeboyutu; q++)
+                                        for(q=0; q<=karaktersayisi; q++)
                                         {
-                                            for(m=0; m<=kelimeboyutu; m++)
+                                            for(m=0; m<=karaktersayisi; m++)
                                             {
-                                                for(n=0; n<=kelimeboyutu; n++)
+                                                for(n=0; n<=karaktersayisi; n++)
                                                 {
                                                     //Dosyaya yazma işlemi
                                                     stream << on_ek;
                                                     stream << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                     stream << son_ek << endl;
+                                                    ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                                    progress_sayac++;
                                                 }
                                             }
                                         }
@@ -360,28 +376,30 @@ void MainWindow::on_pushButton_clicked()
                     }
                     break;
                 case 6:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<=karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<=karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<=karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<=karaktersayisi; t++)
                                 {
-                                    for(w=0; w<=kelimeboyutu; w++)
+                                    for(w=0; w<=karaktersayisi; w++)
                                     {
-                                        for(q=0; q<=kelimeboyutu; q++)
+                                        for(q=0; q<=karaktersayisi; q++)
                                         {
-                                            for(m=0; m<=kelimeboyutu; m++)
+                                            for(m=0; m<=karaktersayisi; m++)
                                             {
-                                                for(n=0; n<=kelimeboyutu; n++)
+                                                for(n=0; n<=karaktersayisi; n++)
                                                 {
-                                                    for(g=0; g<=kelimeboyutu; g++)
+                                                    for(g=0; g<=karaktersayisi; g++)
                                                     {
                                                         //Dosyaya yazma işlemi
                                                         stream << on_ek;
                                                         stream << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                         stream << son_ek << endl;
+                                                        ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                                        progress_sayac++;
                                                     }
                                                 }
                                             }
@@ -393,30 +411,32 @@ void MainWindow::on_pushButton_clicked()
                     }
                     break;
                 case 7:
-                    for(x=0; x<=kelimeboyutu; x++)
+                    for(x=0; x<=karaktersayisi; x++)
                     {
-                        for(y=0; y<=kelimeboyutu; y++)
+                        for(y=0; y<=karaktersayisi; y++)
                         {
-                            for(z=0; z<=kelimeboyutu; z++)
+                            for(z=0; z<=karaktersayisi; z++)
                             {
-                                for(t=0; t<=kelimeboyutu; t++)
+                                for(t=0; t<=karaktersayisi; t++)
                                 {
-                                    for(w=0; w<=kelimeboyutu; w++)
+                                    for(w=0; w<=karaktersayisi; w++)
                                     {
-                                        for(q=0; q<=kelimeboyutu; q++)
+                                        for(q=0; q<=karaktersayisi; q++)
                                         {
-                                            for(m=0; m<=kelimeboyutu; m++)
+                                            for(m=0; m<=karaktersayisi; m++)
                                             {
-                                                for(n=0; n<=kelimeboyutu; n++)
+                                                for(n=0; n<=karaktersayisi; n++)
                                                 {
-                                                    for(g=0; g<=kelimeboyutu; g++)
+                                                    for(g=0; g<=karaktersayisi; g++)
                                                     {
-                                                        for(h=0; h<=kelimeboyutu; h++)
+                                                        for(h=0; h<=karaktersayisi; h++)
                                                         {
                                                             //Dosyaya yazma işlemi
                                                             stream << on_ek;
                                                             stream << QVariant(dizi[9]).toChar() << QVariant(dizi[8]).toChar() << QVariant(dizi[7]).toChar() << QVariant(dizi[6]).toChar() << QVariant(dizi[5]).toChar() << QVariant(dizi[4]).toChar() << QVariant(dizi[3]).toChar() << QVariant(dizi[2]).toChar() << QVariant(dizi[1]).toChar() << QVariant(dizi[0]).toChar();
                                                             stream << son_ek << endl;
+                                                            ui->progressBar->setValue(progress_sayac*100/(pow(karaktersayisi,kelimeboyutu_glob)));
+                                                            progress_sayac++;
                                                         }
                                                     }
                                                 }
@@ -440,7 +460,7 @@ void MainWindow::on_pushButton_clicked()
 
                 ui->label_11->setText("İşlem Tamamlandı");
                 // İşlem bitti
-                ui->progressBar->setValue(100);
+                //ui->progressBar->setValue(100);
                 file.close();
                 break;
 
@@ -512,9 +532,3 @@ void MainWindow::on_actionKullan_m_triggered()
 }
 
 
-
-
-void MainWindow::on_action_zel_Se_im_triggered()
-{
-
-}
