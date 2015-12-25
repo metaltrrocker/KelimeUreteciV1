@@ -35,7 +35,7 @@ void MainWindow::on_pushButton_clicked()
     QMessageBox mesajkutusu;
     QDir yol("/home/");
     QString s;
-    static int dizi[94];
+    int dizi[94];
     int buyukharf[26];
     int kucukharf[26];
     int sayilar[10];
@@ -48,7 +48,6 @@ void MainWindow::on_pushButton_clicked()
     int karaktersayisi=0;
     int progress_sayac=0;
     int x,y,z,t,w,q,m,n,g,h;
-    int dosyaboyutu_son;
     QString on_ek,son_ek,mesajkutusustring,birim,dosyaboyutu_son_string;
     s = yol.relativeFilePath("Kelime_Listesi.liste");
     //QString dosya = "Kelime_Listesi";
@@ -183,7 +182,7 @@ void MainWindow::on_pushButton_clicked()
             karaktersayisi_glob = karaktersayisi;
 
             dosyaboyut_glob = pow(onek_glob+sonek_glob+karaktersayisi_glob,kelimeboyutu_glob);
-
+/*
 //            qDebug()<< kelimeboyutu_glob << " " << onek_glob << " " << sonek_glob << " " << karaktersayisi_glob ;
             dosyaboyutu_son = 5* dosyaboyut_glob/1024;
 //            qDebug()<<dosyaboyutu_son;
@@ -209,10 +208,10 @@ void MainWindow::on_pushButton_clicked()
 
             }
             ui->label_14->setText(QVariant(dosyaboyutu_son).toString()+birim);
-
+*/
             //Kullanıcı İşlemi Başlata tıkladığı zaman dosya boyutu,toplam kelime bilgiler verilecek ve
             //İşleme devam etmesi için onay alınacak.(Dosya boyutu ve işlem uzun sürdüğü için sistem yanıt vermeyebilir!)
-            mesajkutusustring = "Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!\nDosya Boyutu : " +  dosyaboyutu_son_string + QVariant(birim).toString();
+            mesajkutusustring = "Bu işlem uzun sürebilir ve sisteminizin yanıt vermemesine neden olabilir!";
             mesajkutusu.setText(mesajkutusustring);
             mesajkutusu.setInformativeText("Devam etmek istediğinize emin misiniz?");
             mesajkutusu.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -514,7 +513,7 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_actionFormu_Temizle_triggered()
 {
     //Formu Temizleme
-    ui->comboBox->setCurrentIndex(-1);
+    ui->comboBox->setCurrentIndex(0);
     ui->checkBox->setChecked(false);
     ui->checkBox_2->setChecked(false);
     ui->checkBox_3->setChecked(false);
@@ -523,7 +522,7 @@ void MainWindow::on_actionFormu_Temizle_triggered()
     ui->lineEdit_2->clear();
     ui->progressBar->setValue(0);
     ui->label_11->setText("Lütfen Kelime Uzunluğunu Ayarlayın");
-    ui->label_14->setText("İşlemin Başlaması Bekleniyor!");
+    //ui->label_14->setText("İşlemin Başlaması Bekleniyor!");
 }
 
 void MainWindow::on_actionKullan_m_triggered()

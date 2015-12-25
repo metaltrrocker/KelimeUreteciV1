@@ -106,7 +106,7 @@
        <item row="0" column="2">
         <widget class="QComboBox" name="comboBox">
          <property name="currentIndex">
-          <number>-1</number>
+          <number>0</number>
          </property>
          <item>
           <property name="text">
@@ -360,20 +360,6 @@
          </property>
          <property name="text">
           <string>İşlem Durumu  :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="text">
-          <string>Tahmini Boyut :</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QLabel" name="label_14">
-         <property name="text">
-          <string>İşlemin Başlaması Bekleniyor!</string>
          </property>
         </widget>
        </item>

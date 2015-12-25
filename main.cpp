@@ -1,7 +1,8 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QWidget>
-
+#include <QTranslator>
+#include <QPushButton>
 
 int main(int argc, char *argv[])
 {
@@ -16,8 +17,6 @@ int main(int argc, char *argv[])
     qDebug("************ Yazar : Samet Kamgul ************");
     qDebug("**********************************************");
     qDebug("\n");
-
-
 
     return a.exec();
 }
