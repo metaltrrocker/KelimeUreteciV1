@@ -22,3 +22,7 @@ FORMS    += mainwindow.ui
 
 DISTFILES += \
     BeniOku
+
+RESOURCES += \
+    ikon.qrc
+

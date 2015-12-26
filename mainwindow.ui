@@ -22,11 +22,34 @@
   <property name="windowTitle">
    <string>Kelime Üreteci v1.0</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="ikon.qrc">
+    <normaloff>:/new/prefix1/Kelime Üreteci İkon-32-23.png</normaloff>:/new/prefix1/Kelime Üreteci İkon-32-23.png</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
+  <property name="styleSheet">
+   <string notr="true">
+background-color: rgb(210, 250, 255);</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>32</width>
+    <height>32</height>
+   </size>
+  </property>
+  <property name="documentMode">
+   <bool>true</bool>
+  </property>
   <property name="tabShape">
    <enum>QTabWidget::Rounded</enum>
+  </property>
+  <property name="dockNestingEnabled">
+   <bool>true</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -85,6 +108,16 @@
        </item>
        <item row="3" column="1">
         <widget class="QLabel" name="label_4">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
+         </property>
          <property name="text">
           <string>  Büyük Harf(A-Z)</string>
          </property>
@@ -95,6 +128,16 @@
        </item>
        <item row="6" column="1">
         <widget class="QLabel" name="label_7">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
+         </property>
          <property name="text">
           <string>  Özel Karakterler</string>
          </property>
@@ -105,6 +148,9 @@
        </item>
        <item row="0" column="2">
         <widget class="QComboBox" name="comboBox">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(235, 229, 255);</string>
+         </property>
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -164,6 +210,9 @@
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(235, 229, 255);</string>
+         </property>
          <property name="inputMethodHints">
           <set>Qt::ImhNone</set>
          </property>
@@ -174,6 +223,16 @@
        </item>
        <item row="2" column="1">
         <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
+         </property>
          <property name="text">
           <string>  Son ek</string>
          </property>
@@ -184,6 +243,16 @@
        </item>
        <item row="5" column="1">
         <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
+         </property>
          <property name="text">
           <string>  Sayılar(0-9)</string>
          </property>
@@ -193,10 +262,24 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="lineEdit"/>
+        <widget class="QLineEdit" name="lineEdit">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(235, 229, 255);</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
         <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
+         </property>
          <property name="text">
           <string>  Ön ek</string>
          </property>
@@ -207,6 +290,16 @@
        </item>
        <item row="4" column="1">
         <widget class="QLabel" name="label_5">
+         <property name="font">
+          <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
+         </property>
          <property name="text">
           <string>  Küçük Harf(a-z)</string>
          </property>
@@ -216,10 +309,17 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLineEdit" name="lineEdit_2"/>
+        <widget class="QLineEdit" name="lineEdit_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(235, 229, 255);</string>
+         </property>
+        </widget>
        </item>
        <item row="4" column="2">
         <widget class="QCheckBox" name="checkBox">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(235, 229, 255);</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -227,6 +327,9 @@
        </item>
        <item row="5" column="2">
         <widget class="QCheckBox" name="checkBox_3">
+         <property name="styleSheet">
+          <string notr="true">color: rgb(235, 229, 255);</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -242,11 +345,17 @@
          </property>
          <property name="font">
           <font>
+           <pointsize>9</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
            <underline>false</underline>
           </font>
          </property>
          <property name="autoFillBackground">
           <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color:rgb(255, 130, 0)</string>
          </property>
          <property name="frameShape">
           <enum>QFrame::NoFrame</enum>
@@ -293,8 +402,20 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(170, 170, 255);
+color: rgb(85, 85, 255);</string>
+         </property>
          <property name="text">
-          <string>İşlemi Durdur ve Programı Kapat!</string>
+          <string>İşlemi Durdur ve
+ Programı Kapat!</string>
          </property>
         </widget>
        </item>
@@ -305,6 +426,17 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(170, 170, 255);
+color: rgb(85, 85, 255);</string>
          </property>
          <property name="text">
           <string>İşlemi Başlat</string>
@@ -324,11 +456,22 @@
      </item>
      <item>
       <widget class="QProgressBar" name="progressBar">
+       <property name="font">
+        <font>
+         <pointsize>6</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+         <stylestrategy>NoAntialias</stylestrategy>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="value">
         <number>0</number>
        </property>
        <property name="textVisible">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="invertedAppearance">
         <bool>false</bool>
@@ -358,6 +501,16 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 85, 255);</string>
+         </property>
          <property name="text">
           <string>İşlem Durumu  :</string>
          </property>
@@ -365,6 +518,16 @@
        </item>
        <item row="0" column="1">
         <widget class="QLabel" name="label_11">
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(85, 85, 255);</string>
+         </property>
          <property name="text">
           <string>Lütfen Kelime Uzunluğunu Ayarlayın</string>
          </property>
@@ -383,6 +546,24 @@
      <width>360</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="defaultUp">
+    <bool>true</bool>
+   </property>
+   <property name="nativeMenuBar">
+    <bool>true</bool>
    </property>
    <widget class="QMenu" name="menuDosya">
     <property name="title">
@@ -435,7 +616,9 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="ikon.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionBa_lat</sender>
