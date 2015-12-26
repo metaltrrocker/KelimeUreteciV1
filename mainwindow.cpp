@@ -7,7 +7,6 @@
 #include <QProcess>
 #include <QDebug>
 #include <QApplication>
-#include <QSplashScreen>
 #include <math.h>
 #include <degisken.h>
 

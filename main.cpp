@@ -16,7 +16,7 @@ QThread::sleep(secs);
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QPixmap pixmap("Splashlogo.png");
+    QPixmap pixmap("Splashlogo");
     QSplashScreen splash(pixmap);
     splash.show();
     splash.showMessage(QObject::tr("Program Yükleniyor..."),

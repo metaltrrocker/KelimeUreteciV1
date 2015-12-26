@@ -21,7 +21,8 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 DISTFILES += \
-    BeniOku
+    BeniOku \
+    Splashlogo.png
 
 RESOURCES += \
     ikon.qrc
