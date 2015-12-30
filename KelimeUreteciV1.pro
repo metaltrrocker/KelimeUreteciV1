@@ -21,9 +21,9 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 DISTFILES += \
-    BeniOku \
-    Splashlogo.png
+    BeniOku
 
 RESOURCES += \
-    ikon.qrc
+    ikon.qrc \
+    arkaplan.qrc
 

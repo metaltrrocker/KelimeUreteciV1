@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_comboBox_activated(int index)
 {
-    ui->label_11->setText("Kelime Uzunluğu "+ ui->comboBox->currentText()+" olarak ayarlandı!");
+    //ui->label_11->setText("Kelime Uzunluğu "+ ui->comboBox->currentText()+" olarak ayarlandı!");
     karaktersayisi_glob = index;
 }
 
@@ -223,7 +223,7 @@ void MainWindow::on_pushButton_clicked()
             case QMessageBox::Yes:
 
                 ui->progressBar->setValue(0);
-                ui->label_11->setText("Lütfen işlemin tamamlanmasını bekleyin");
+                //ui->label_11->setText("Lütfen işlemin tamamlanmasını bekleyin");
 
                 //Dosyaya yazmanın başlaması(Kelime Oluşturma)
                 switch (ui->comboBox->currentIndex()) {
@@ -457,7 +457,7 @@ void MainWindow::on_pushButton_clicked()
                 // uçbirim çıktısı
                 qDebug("İşlem Tamamlandı!");
 
-                ui->label_11->setText("İşlem Tamamlandı");
+                //ui->label_11->setText("İşlem Tamamlandı");
                 // İşlem bitti
                 //ui->progressBar->setValue(100);
                 file.close();
@@ -466,7 +466,7 @@ void MainWindow::on_pushButton_clicked()
             case QMessageBox::No:
                 qDebug()<< "Hayır seçildi";
                 //qApp->quit();
-                ui->label_11->setText("İşlem kullanıcı tarafından iptal edildi!");
+                //ui->label_11->setText("İşlem kullanıcı tarafından iptal edildi!");
                 break;
             }
 
@@ -521,7 +521,7 @@ void MainWindow::on_actionFormu_Temizle_triggered()
     ui->lineEdit->clear();
     ui->lineEdit_2->clear();
     ui->progressBar->setValue(0);
-    ui->label_11->setText("Lütfen Kelime Uzunluğunu Ayarlayın");
+    //ui->label_11->setText("Lütfen Kelime Uzunluğunu Ayarlayın");
     //ui->label_14->setText("İşlemin Başlaması Bekleniyor!");
 }
 
