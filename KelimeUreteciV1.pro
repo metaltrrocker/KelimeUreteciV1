@@ -21,9 +21,11 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 DISTFILES += \
-    BeniOku
+    BeniOku \
+    kelimeureteci.rc
 
 RESOURCES += \
     ikon.qrc \
     arkaplan.qrc
+RC_FILE = kelimeureteci.rc
 
