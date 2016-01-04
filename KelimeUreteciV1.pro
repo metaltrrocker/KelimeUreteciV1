@@ -16,7 +16,8 @@ SOURCES += main.cpp\
         mainwindow.cpp
 
 HEADERS  += mainwindow.h \
-    degisken.h
+    degisken.h \
+    winikon.rc
 
 FORMS    += mainwindow.ui
 
@@ -27,5 +28,5 @@ DISTFILES += \
 RESOURCES += \
     ikon.qrc \
     arkaplan.qrc
-RC_FILE = kelimeureteci.rc
+RC_FILE =
 
